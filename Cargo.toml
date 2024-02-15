@@ -1,0 +1,37 @@
+[package]
+name = "rustface"
+description = "Face detection library, based on the C++ SeetaFace engine."
+version = "0.1.7"
+repository = "https://github.com/atomashpolskiy/rustface"
+readme = "README.md"
+keywords = ["face", "detection"]
+categories = ["multimedia::images", "science"]
+authors = ["Andrei Tomashpolskiy <nordmann89@gmail.com>"]
+license = "BSD-2-Clause"
+exclude = [
+    "assets/*",
+]
+edition = "2021"
+
+[dependencies]
+num = "0.3"
+byteorder = "1.2.6"
+rayon = { version = "1.4.1", optional = true }
+
+[dev-dependencies]
+image = "0.23"
+imageproc = "0.22.0"
+criterion = "0.3"
+
+[lib]
+bench = false # workaround for "Unrecognized option: 'save-baseline'"
+
+[[bench]]
+name = "benchmarks"
+harness = false
+
+[profile.release]
+lto = true
+
+[features]
+default = ["rayon"]
