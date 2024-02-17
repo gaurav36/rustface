@@ -29,22 +29,28 @@ pub enum ClassifierKind {
     SurfMlp,
 }
 
+
+#[derive(Debug, Hash, PartialEq, Eq, Clone)]
+pub enum ClassifierKind {
+    LabBoosted,
+    SurfMlp,
+}
+
 impl ClassifierKind {
-    #[inline]
-    pub fn from(id: i32) -> Option<Self> {
-        match id {
-            0 => Some(ClassifierKind::LabBoosted),
-            1 => Some(ClassifierKind::SurfMlp),
-            _ => None,
+    pub fn from_str(kind: &str) -> Result<Self, String> {
+        match kind.to_lowercase().as_str() {
+            "labboosted" => Ok(Self::LabBoosted),
+            "surfmlp" => Ok(Self::SurfMlp),
+            _ => Err(format!("Invalid classifier kind: {}", kind)),
         }
     }
 }
 
+#[derive(Clone)]
 pub struct Score {
-    positive: bool,
-    score: f32,
+    pub positive: bool,
+    pub score: f32,
 }
-
 impl Score {
     #[inline]
     pub fn is_positive(&self) -> bool {
